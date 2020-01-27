@@ -78,6 +78,53 @@ const ratesAverage = arr => {
 
 // Iteration 5: Drama movies - Get the average of Drama Movies
 
+const dramaMoviesRate = arr => {
+
+  let dramas = arr.filter(i =>  i.genre.includes('Drama'))
+  let count = 0
+  if(dramas.length === 0) return 0;
+  let rates = dramas.forEach(i =>i.rate ? count += i.rate:count += 0)
+
+  return Number((count/dramas.length).toFixed(2))
+
+}
+
 // Iteration 6: Time Format - Turn duration of the movies from hours to minutes
+
+const turnHoursToMinutes = arr => {
+
+  let finalArr = [...arr]
+  let newArray = []
+  let numArray = []
+
+  for (i in arr){
+    newArray.push(arr[i].duration)
+  }
+
+  for (i in newArray){
+    if (newArray[i].length>=8){
+      numArray.push((Number(newArray[i][0])*60)+(Number(newArray[i].slice(3,5))))
+    } else if (newArray[i].includes("mi")){
+      numArray.push(parseInt(newArray[i].slice(0,4)))
+    } else {
+      numArray.push(parseInt(newArray[i])*60)
+    }
+  }
+
+ // Until here numArray has all the minutes of movies
+
+  // for (i in finalArr){ 
+  //   finalArr[i].duration = numArray[i]
+  // }
+
+  // This doesn't work because each pointer that references each object in the original array are still pointing to these objects in the copy. So if you call the function like this it would change the oiriginal array.
+
+  for (i in finalArr){
+    finalArr[i] = {...finalArr[i], duration: numArray[i]};
+  }
+
+  return finalArr
+
+}
 
 // BONUS Iteration: Best yearly rate average - Best yearly rate average
